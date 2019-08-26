@@ -1,0 +1,5 @@
+<div class="kd-appbar"><div id='notify-box'>&nbsp;&nbsp;;<span class="notify">
+<span id="notify-text">&nbsp;&nbsp;</span></span></div>
+<div class="kd-appname-wrapper">&nbsp;&nbsp;
+<div class="goog-inline-block kd-appname" id="app-name">
+<div class="goog-inline-block goog-float-menu-button-dropdown">&nbsp;</div></div></div>
