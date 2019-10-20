@@ -174,7 +174,7 @@ def viterbe(O, PI, A, B, str=u''):
 
 if __name__ == '__main__':
     # 训练模型
-    # train()
+    train()
     # 加载模型
     PI = pickle.load(open('model_PI', 'rb'))
     A = pickle.load(open('model_A', 'rb'))
@@ -200,7 +200,7 @@ if __name__ == '__main__':
     #               [0.7, 0.3]])
     # PI = np.array([0.2, 0.4, 0.4])
     # O = [0, 1, 0]
-    str = u'小明硕士毕业于中国科学院计算所'
+    str = u'小明硕士毕业于北京信息科技大学'
     try:
         O = [character_to_idx[w] for w in str]
     except:
