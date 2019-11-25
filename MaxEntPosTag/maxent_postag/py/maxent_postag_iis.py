@@ -12,11 +12,42 @@ class MaxEnt(object):
         self.trainset = []
         # 词性标记集，表示Y可取的值的集合，比如名词、动词、形容词...
         self.labels = set()
-        # 存储v(X=x)的次数，这里的x指的是一个事件中的特征值序列，比如(当前词，前词，后词）
-        self.vx_ = defaultdict(int)
 
     # 对一行文本抽取多个事件序列
     def generate_events(self, text, train_flag=False):
+        # 定义事件序列，注意输入的1行文本可以抽取出多个事件
+        event_li = []
+        # 分词，要求输入的字符串中词语之间以空白分隔，对于训练集在词语后还要加词性标记：word/pos
+        word_li = text.split()
+        # 分离词语和词性
+        if train_flag:
+            # 对于含有词性标记的词语序列，分离词语和词性：[(word1,pos1),(word2,pos2),...]
+            word_li = [tuple(w.split(u'/')) for w in word_li if len(w.split(u'/')) == 2]
+        else:
+            # 对于没有词性标记的词语序列，添加词性"x_pos"：[(word1,'x_pos'),(word2,'x_pos'),...]
+            word_li = [(w, u'x_pos') for w in word_li]
+        # 为词语序列添加头元素和尾元素，便于后续抽取事件
+        word_li = [(u'pre1', u'pre1_pos')] + word_li + [(u'pro1', u'pro1_pos')]
+        # 遍历中心词抽取1个event，每个event由1个词性标记和多个特征项构成
+        for i in range(1, len(word_li) - 1):
+            # 特征函数1 中心词
+            fea_1 = word_li[i][0]
+            # 特征函数2 前一个词
+            fea_2 = word_li[i - 1][0]
+            # 特征函数3 后一个词
+            fea_3 = word_li[i + 1][0]
+            # 词性y
+            y = word_li[i][1]
+            # 构建1个事件，注意1个事件由3个特征项构成，同一事件中的3个特征项共享1个输出标记y
+            # 因此1个事件对应3个特征函数：f1(fea_1,y),f2(fea_2,y),f3(fea_3,y)
+            fields = [y, fea_3, fea_2, fea_1]
+            # 将事件添加到事件序列
+            event_li.append(fields)
+        # 返回事件序列
+        return event_li
+
+    # 对一行文本抽取多个事件序列
+    def generate_events2(self, text, train_flag=False):
         # 定义事件序列，注意输入的1行文本可以抽取出多个事件
         event_li = []
         # 分词，要求输入的字符串中词语之间以空白分隔，对于训练集在词语后还要加词性标记：word/pos
@@ -66,7 +97,6 @@ class MaxEnt(object):
                         # 对(词性标记，特征)计数，以便后续计算P(X,Y)的经验分布
                         for f in set(event[1:]):
                             self.feats[(label, f)] += 1
-                        self.px_[tuple(event[1:])] += 1
                         # 将event添加到训练集
                         self.trainset.append(event)
 
@@ -109,7 +139,7 @@ class MaxEnt(object):
                         # 读取出特征函数的索引值
                         idx = self.feats[(label, f)]
                         # P(x)的经验分布计算 p(x)=1/N
-                        ep[idx] += prob * (self.px_[tuple(features)]*1.0 / self.N)
+                        ep[idx] += prob * (1.0 / self.N)
         return ep
 
     # 检查权值向量是否收敛，收敛条件为W中的每个元素都不再发生变化，
@@ -176,7 +206,7 @@ class MaxEnt(object):
         :return: 返回词性标注的文本
         """
         word_li = []
-        events_li = self.generate_events(text)
+        events_li = self.generate_events2(text)
         for features in events_li:
             prob = self.calprob(features)
             prob.sort(reverse=True)
@@ -189,6 +219,8 @@ if __name__ == "__main__":
     maxent.load_data("../data/199801.txt")
     maxent.train(50)
     word_li = maxent.predict("中国 政府 将 继续 坚持 奉行 独立自主 的 和平 外交 政策 。")
+    print(word_li)
+    word_li = maxent.predict("中国 领土 将 继续 坚持 奉行 独立自主 的 和平 外交 政策 。")
     print(word_li)
 
 

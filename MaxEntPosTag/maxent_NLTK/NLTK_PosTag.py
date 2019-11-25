@@ -69,13 +69,14 @@ if __name__ == "__main__":
     test_set = data_set[-test_size:]
     print("训练集事件数=", len(train_set))
     print("测试集事件数=", len(test_set))
-    # GIS学习算法的最大熵模型
-    classifier_gis = nltk.classify.maxent.MaxentClassifier.train(train_set,  trace=2, algorithm='gis', max_iter=10)
-    print("GIS模型准确率= ", nltk.classify.accuracy(classifier_gis, test_set))
-    print("GIS模型测试：")
-    print(pos_tag(classifier_gis, "中国 政府 将 继续 坚持 奉行 独立自主 的 和平 外交 政策 。"))
     # IIS学习算法的最大熵模型
     classifier_iis = nltk.classify.maxent.MaxentClassifier.train(train_set, trace=2, algorithm='iis', max_iter=10)
     print("IIS模型准确率= ", nltk.classify.accuracy(classifier_iis, test_set))
     print("IIS模型测试：")
     print(pos_tag(classifier_iis, "中国 政府 将 继续 坚持 奉行 独立自主 的 和平 外交 政策 。"))
+    # GIS学习算法的最大熵模型
+    classifier_gis = nltk.classify.maxent.MaxentClassifier.train(train_set,  trace=2, algorithm='gis', max_iter=10)
+    print("GIS模型准确率= ", nltk.classify.accuracy(classifier_gis, test_set))
+    print("GIS模型测试：")
+    print(pos_tag(classifier_gis, "中国 政府 将 继续 坚持 奉行 独立自主 的 和平 外交 政策 。"))
+
