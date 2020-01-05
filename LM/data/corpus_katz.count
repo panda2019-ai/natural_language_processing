@@ -1,0 +1,28 @@
+<s>	7
+<s> dogs	4
+<s> cats	2
+<s> the	1
+dogs	4
+dogs chase	3
+dogs bark	1
+chase	4
+chase cats	1
+chase birds	2
+chase the	1
+cats	4
+cats </s>	2
+cats meow	1
+cats chase	1
+</s>	7
+bark	1
+bark </s>	1
+meow	1
+meow </s>	1
+birds	3
+birds </s>	2
+birds chirp	1
+the	2
+the cats	1
+the birds	1
+chirp	1
+chirp </s>	1

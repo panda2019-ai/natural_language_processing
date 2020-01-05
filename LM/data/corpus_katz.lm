@@ -1,0 +1,38 @@
+
+\data\
+ngram 1=10
+ngram 2=18
+
+\1-grams:
+-0.5862657	</s>
+-99	<s>	-0.2685196
+-1.431364	bark	-0.1706962
+-0.9542425	birds	0.05115252
+-0.8293038	cats	0.1118503
+-0.8293038	chase	0.03266911
+-1.431364	chirp	-0.1706962
+-0.8293038	dogs	-0.8141489
+-1.431364	meow	-0.1706962
+-1.130334	the	-0.1706962
+
+\2-grams:
+-1.748188	<s> cats
+-0.243038	<s> dogs
+-1.146128	<s> the
+-0.30103	bark </s>
+-1.380211	birds </s>
+-0.7781513	birds chirp
+-1.50515	cats </s>
+-0.90309	cats chase
+-0.90309	cats meow
+-1.50515	chase birds
+-0.90309	chase cats
+-0.90309	chase the
+-0.30103	chirp </s>
+-0.90309	dogs bark
+-0.1249387	dogs chase
+-0.30103	meow </s>
+-0.60206	the birds
+-0.60206	the cats
+
+\end\
