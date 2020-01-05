@@ -1,0 +1,7 @@
+dogs chase cats
+dogs bark
+cats meow
+dogs chase birds
+cats chase birds
+dogs chase the cats
+the birds chirp
